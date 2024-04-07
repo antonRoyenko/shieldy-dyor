@@ -1,6 +1,3 @@
-import {
-  promoAdditionsWithoutHtml,
-} from '@helpers/promo'
 import { cloneDeep } from 'lodash'
 import { Message, User } from 'telegram-typings'
 
@@ -52,19 +49,6 @@ export function constructMessageWithEntities(
         })
       }
     }
-  }
-  if (addPromoText) {
-    if (!message.entities) {
-      message.entities = []
-    }
-    const promoAddition = promoAdditionsWithoutHtml[language](Math.random())
-    message.entities.push(...promoAddition.links.map(item => ({
-      type: 'text_link',
-      offset: `${originalText}\n`.length + item.offset,
-      length: item.length,
-      url: item.link,
-    })))
-    originalText = `${originalText}\n${promoAddition.text}`
   }
   message.text = originalText
   return message

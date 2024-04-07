@@ -8,36 +8,6 @@ export function languageForPromo(chat: DocumentType<Chat>) {
   return 'en' // All other languagess are not supported yet
 }
 
-const ruPromoAdditionsArray = [
-  {
-    prelinks: 'При поддержке',
-    links: [
-      {
-      prefix: ' ',
-      text: '1inch Network',
-      postfix: ' ',
-      link: 'https://jn3rg.app.link/c10FJKdtnpb'
-      }
-    ],
-    postlinks: '',
-  },
-];
-
-const enPromoAdditionsArray = [
-  {
-    prelinks: 'Powered by',
-    links: [
-      {
-      prefix: ' ',
-      text: '1inch Network',
-      postfix: ' ',
-      link: 'https://jn3rg.app.link/c10FJKdtnpb'
-      }
-    ],
-    postlinks: '',
-  },
-];
-
 function promoFromStruct (promo) {
   return promo.links.reduce(
       (s, item) => s + item.prefix + '<a href="' + item.link + '">' + item.text + '</a>' + item.postfix,
@@ -63,16 +33,6 @@ function promoFromStructWithoutHtml (promo) {
       };
     }),
   }
-}
-
-export const promoAdditions = {
-  ru: (rand) => promoFromStruct(ruPromoAdditionsArray[Math.trunc(rand * ruPromoAdditionsArray.length)]),
-  en: (rand) => promoFromStruct(enPromoAdditionsArray[Math.trunc(rand * enPromoAdditionsArray.length)]),
-}
-
-export const promoAdditionsWithoutHtml = {
-  ru: (rand) => promoFromStructWithoutHtml(ruPromoAdditionsArray[Math.trunc(rand * ruPromoAdditionsArray.length)]),
-  en: (rand) => promoFromStructWithoutHtml(enPromoAdditionsArray[Math.trunc(rand * enPromoAdditionsArray.length)]),
 }
 
 export const promoExceptions = [

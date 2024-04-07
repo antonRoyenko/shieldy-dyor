@@ -48,8 +48,6 @@ import { setupRestrictTime } from '@commands/restrictTime'
 import { setupBanNewTelegramUsers } from '@commands/banNewTelegramUsers'
 import { messageSaver } from '@middlewares/messageSaver'
 import { setup1inchInfo } from '@commands/1inch'
-import { checkSubscription } from '@middlewares/checkSubscription'
-import { setupSubscription } from '@commands/subscription'
 
 // Ignore all messages that are too old
 bot.use(checkTime)
@@ -105,9 +103,6 @@ setupSetConfig(bot)
 setupBanForFastRepliesToPosts(bot)
 setupRestrictTime(bot)
 setupBanNewTelegramUsers(bot)
-if (process.env.PREMIUM === 'true') {
-  setupSubscription(bot)
-}
 // Newcomers logic
 setupNewcomers(bot)
 setup1inchInfo(bot)

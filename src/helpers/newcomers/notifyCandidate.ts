@@ -9,7 +9,6 @@ import { getName, getUsername } from '@helpers/getUsername'
 import {
   languageForPromo,
   promoExceptions,
-  promoAdditions,
 } from '@helpers/promo'
 
 export async function notifyCandidate(
@@ -88,15 +87,12 @@ export async function notifyCandidate(
         message.text,
         message.entities
       )
-      const promoAddition = promoAdditions[languageForPromo(chat)](
-        Math.random()
-      )
       message.text =
         promoExceptions.includes(ctx.chat.id) ||
         (process.env.PREMIUM === 'true' &&
           ctx.dbchat.subscriptionStatus === SubscriptionStatus.active)
           ? `${getUsername(candidate)}\n\n${formattedText}`
-          : `${getUsername(candidate)}\n\n${formattedText}\n${promoAddition}`
+          : `${getUsername(candidate)}\n\n${formattedText}`
       try {
         message.chat = undefined
         const sentMessage = await ctx.telegram.sendCopy(chat.id, message, {
@@ -117,9 +113,6 @@ export async function notifyCandidate(
   } else {
     extra = extra.HTML(true)
     if (image) {
-      const promoAddition = promoAdditions[languageForPromo(chat)](
-        Math.random()
-      )
       return ctx.replyWithPhoto({ source: image.png } as any, {
         caption:
           promoExceptions.includes(ctx.chat.id) ||
@@ -136,13 +129,10 @@ export async function notifyCandidate(
               )}</a>${warningMessage} (${chat.timeGiven} ${strings(
                 chat,
                 'seconds'
-              )})\n${promoAddition}`,
+              )})`,
         parse_mode: 'HTML',
       })
     } else {
-      const promoAddition = promoAdditions[languageForPromo(chat)](
-        Math.random()
-      )
       return ctx.replyWithMarkdown(
         promoExceptions.includes(ctx.chat.id) ||
           (process.env.PREMIUM === 'true' &&
@@ -166,7 +156,7 @@ export async function notifyCandidate(
             )}</a>${warningMessage} (${chat.timeGiven} ${strings(
               chat,
               'seconds'
-            )})\n${promoAddition}`,
+            )})`,
         extra
       )
     }
